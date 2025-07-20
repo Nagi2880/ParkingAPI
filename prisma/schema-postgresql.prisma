@@ -1,6 +1,7 @@
-generator postgres_client {
+
+//npx prisma generate --schema=prisma/schema-postgresql.prisma
+generator client {
     provider = "prisma-client-js"
-    output   = "../generated/postgres"
 }
 datasource db {
   provider = "postgresql"
@@ -35,19 +36,23 @@ model User{
     email           String    @unique
     name            String
     surname         String
-    Nationality     String
-    dni             String
-    dniCountry      String
+    nationality     String
+    dni             String    @unique @default("999999999")
+    dniCountry      String    @default("No countryDNI")
     dniType         Dnitype   @default(DNI)
-    birthdate       DateTime
+    creditCard      String?
+    birthDate       DateTime
     money           Float     @default(0)
     averageRating   Float     @default(0)
     starcount       Int       @default(0)
     phone           String
     password        String
     role            Role      @default(USER)
+    isActive        Boolean   @default(true)
     createdAt       DateTime  @default(now())
     updatedAt       DateTime  @updatedAt
+    deleted         Boolean   @default(false)
+    deletedAt       DateTime?
     cars            Car[]
     parkings        Parking[]
     parkingRequests ParkingRequest[]
