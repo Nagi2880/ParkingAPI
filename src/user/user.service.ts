@@ -6,8 +6,8 @@ import { PrismaService } from '../prisma.service';
 export class UserService {
   constructor( private readonly prisma: PrismaService) {}
   
-  create(createUserDto: CreateUserDto){
-    const newUser = this.prisma.user.create({
+  async create(createUserDto: CreateUserDto){
+    const newUser = await this.prisma.user.create({
       data:{
         id: createUserDto.id,
         email: createUserDto.email,
@@ -24,15 +24,19 @@ export class UserService {
     return newUser;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const allusers = await this.prisma.user.findMany()
+    return allusers
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findbyId(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id }
+    })
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 

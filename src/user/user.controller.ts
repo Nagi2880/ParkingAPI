@@ -9,28 +9,35 @@ export class UserController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
+
     const newUser = await this.userService.create(createUserDto);
     return {
-      succces: true,
+      success: true,
       message: `User ${newUser.name && newUser.surname} created successfully`,
       data: newUser,
     };
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  async findAll() {
+
+    const allUsers = await this.userService.findAll();
+    return {
+      success: true,
+      mesage: 'All users retrieved successfully',
+      data: allUsers,
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  async findbyId(@Param('id') id: string) {
+    const user = await this.userService.findbyId(id);
+    return user 
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
+  update(@Param('id') id: string, @Body()) {
+    const updatedUser = this.userService.update(id);}
 
   @Delete(':id')
   remove(@Param('id') id: string) {
