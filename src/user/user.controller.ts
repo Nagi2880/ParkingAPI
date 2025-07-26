@@ -29,7 +29,7 @@ export class UserController {
     }
   }
 
-  @Get('/getuser/:id')
+  @Get('/getuser:id')
   async findbyId(@Param('id') id: string) {
     const user = await this.userService.findbyId(id);
     return {
@@ -39,12 +39,23 @@ export class UserController {
     } 
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body()) {
-    const updatedUser = this.userService.update(id);}
+  @Patch('/updateuser:id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    const updatedUser = await this.userService.update(id, updateUserDto);
+    return {
+      success: true,
+      message: `User with ID ${id} updated successfully`,
+      data: updatedUser,
+    };
+  }
 
-  @Delete(':id')
+  @Delete('/deleteuser:id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+    const removeUser = this.userService.remove(id);
+    return {
+      success: true,
+      message: `User with ID ${id} deleted successfully`,
+      data: removeUser,
+    }
   }
 }
