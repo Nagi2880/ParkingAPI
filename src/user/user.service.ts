@@ -18,7 +18,6 @@ export class UserService {
         phone: createUserDto.phone,
         password: createUserDto.password,
         createdAt: new Date(),
-        updatedAt: new Date(),
       } 
     });
     return newUser;
@@ -36,11 +35,21 @@ export class UserService {
     return user;
   }
 
-  update(updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string , updateUserDto: UpdateUserDto) {
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data:{
+        ...updateUserDto,
+        updatedAt: new Date(),
+      }
+    });
+    return updatedUser;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const deleteuser = await this.prisma.user.delete({
+      where: { id },   
+    });
+    return deleteuser;
   }
 }

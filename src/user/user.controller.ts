@@ -3,11 +3,11 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('user')
+@Controller('api/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post('/create')
   async create(@Body() createUserDto: CreateUserDto) {
 
     const newUser = await this.userService.create(createUserDto);
@@ -18,7 +18,7 @@ export class UserController {
     };
   }
 
-  @Get()
+  @Get('/allusers')
   async findAll() {
 
     const allUsers = await this.userService.findAll();
@@ -29,10 +29,14 @@ export class UserController {
     }
   }
 
-  @Get(':id')
+  @Get('/getuser/:id')
   async findbyId(@Param('id') id: string) {
     const user = await this.userService.findbyId(id);
-    return user 
+    return {
+      success: true,
+      message: `User with ID ${id} retrieved successfully`,
+      data: user,
+    } 
   }
 
   @Patch(':id')
