@@ -68,7 +68,7 @@ model Car{
   model           String?
   color           String?
   year            Int?
-  fabric_number   String?
+  fabricNumber   String?
   parkingRequests ParkingRequest[]
 }
 
@@ -83,7 +83,7 @@ model Parking{
   longitude       String
   pricePerHour    Float
   status          ParkingStatus   @default(OPEN)
-  places_to_park  Int             @default(0)
+  placesToPark  Int             @default(0)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   requests        ParkingRequest[]
