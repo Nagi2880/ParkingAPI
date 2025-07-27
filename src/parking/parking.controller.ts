@@ -8,27 +8,52 @@ export class ParkingController {
   constructor(private readonly parkingService: ParkingService) {}
 
   @Post()
-  create(@Body() createParkingDto: CreateParkingDto) {
-    return this.parkingService.create(createParkingDto);
+  async create(@Body() createParkingDto: CreateParkingDto) {
+    const newParking = await this.parkingService.create(createParkingDto);
+    return {
+      success: true,
+      message: 'Parking created successfully',
+      data: newParking,
+    };
   }
 
   @Get()
-  findAll() {
-    return this.parkingService.findAll();
+  async findAll() {
+    const allParkings = this.parkingService.findAll();
+    return {
+      success: true,
+      message: 'All parkings retrieved successfully',
+      data: allParkings,
+    };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parkingService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const parking = await this.parkingService.findbyId(id);
+    return{
+      success: true,
+      message: `Parking with ID ${id} retrieved successfully`,
+      data: parking,
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateParkingDto: UpdateParkingDto) {
-    return this.parkingService.update(+id, updateParkingDto);
+  async update(@Param('id') id: string, @Body() updateParkingDto: UpdateParkingDto) {
+    const updatedParking = await this.parkingService.update(id, updateParkingDto);
+    return {
+    success:true,
+    message: `Parking with ID ${id} updated successfully`,
+    data: updatedParking,
+  }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.parkingService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const removeParking = await this.parkingService.remove(id);
+    return {
+      success: true,
+      message: `Parking with ID ${id} deleted successfully`,
+      data: removeParking,
+    }
   }
 }
