@@ -78,7 +78,6 @@ model Parking{
   owner           User            @relation(fields: [ownerId], references: [id])
   name            String
   description     String?
-  address         String
   latitude        String
   longitude       String
   pricePerHour    Float

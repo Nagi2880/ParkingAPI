@@ -3,7 +3,6 @@ export class CreateParkingDto {
     ownerId: string;
     name: string;
     description?: string;
-    address: string;
     latitude: string;
     longitude: string;
     pricePerHour: number;
