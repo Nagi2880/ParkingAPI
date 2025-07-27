@@ -4,8 +4,8 @@ export class CreateParkingDto {
     name: string;
     description?: string;
     address: string;
-    latitude: number;
-    longitude: number;
+    latitude: string;
+    longitude: string;
     pricePerHour: number;
     placesToPark: number;
     createdAt: Date;

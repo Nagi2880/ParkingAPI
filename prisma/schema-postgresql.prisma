@@ -83,7 +83,7 @@ model Parking{
   longitude       String
   pricePerHour    Float
   status          ParkingStatus   @default(OPEN)
-  placesToPark  Int             @default(0)
+  placesToPark    Int             
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   requests        ParkingRequest[]
