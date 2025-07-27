@@ -9,11 +9,9 @@ export class ParkingService {
   async create(createParkingDto: CreateParkingDto) {
     const newParking = await this.prisma.parking.create({
       data:{
-        id: createParkingDto.id,
         ownerId: createParkingDto.ownerId,
         name: createParkingDto.name,
         description: createParkingDto.description,
-        address: createParkingDto.address,
         latitude: createParkingDto.latitude,
         longitude: createParkingDto.longitude,
         pricePerHour: createParkingDto.pricePerHour,

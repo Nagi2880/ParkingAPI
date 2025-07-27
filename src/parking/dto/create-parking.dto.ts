@@ -1,5 +1,4 @@
 export class CreateParkingDto {
-    id: string;
     ownerId: string;
     name: string;
     description?: string;

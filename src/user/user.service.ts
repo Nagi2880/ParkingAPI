@@ -9,7 +9,6 @@ export class UserService {
   async create(createUserDto: CreateUserDto){
     const newUser = await this.prisma.user.create({
       data:{
-        id: createUserDto.id,
         email: createUserDto.email,
         name: createUserDto.name,
         surname: createUserDto.surname,
