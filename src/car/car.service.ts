@@ -6,8 +6,8 @@ import { PrismaService } from '../prisma.service';
 export class CarService {
   constructor(private readonly prisma: PrismaService) {}
   
-  create(createCarDto: CreateCarDto) {
-    const newCar = this.prisma.car.create({
+  async create(createCarDto: CreateCarDto) {
+    const newCar = await this.prisma.car.create({
       data: {
         userId: createCarDto.userId,
         plate: createCarDto.plate,
@@ -21,16 +21,40 @@ export class CarService {
     return newCar
   }
 
-  findAll() {
-    return `This action returns all car`;
+  async findAll(id : string) {
+    const allcars = await this.prisma.car.findMany({
+      where:{
+        userId: id
+      }
+    })
+  return allcars;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} car`;
+  async findbyId(id: string) {
+    const car =  await this.prisma.car.findUnique({
+      where:{ id }
+    })
+    return car;
   }
 
-  update(id: number, updateCarDto: UpdateCarDto) {
-    return `This action updates a #${id} car`;
+  updatemyCar(id: string, userId: string, updateCarDto: UpdateCarDto){
+    const car = this.prisma.car.findFirst({
+      where: {
+        id: id,
+        userId: userId
+      }
+    });
+    if(!car){
+      throw new Error("car not found or the user does not own this car")
+    }
+    return this.prisma.car.update({
+      where: { id },
+      data: {
+        ...updateCarDto,
+        updateAt: new Date(),
+        userId: userId
+      }
+    })
   }
 
   remove(id: number) {

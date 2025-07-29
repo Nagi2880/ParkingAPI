@@ -70,6 +70,8 @@ model Car{
   year            Int?
   fabricNumber   String?
   parkingRequests ParkingRequest[]
+  updateAt       DateTime @updatedAt
+  createdAt      DateTime @default(now())
 }
 
 model Parking{
