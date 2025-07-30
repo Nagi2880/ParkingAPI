@@ -21,10 +21,10 @@ export class CarService {
     return newCar
   }
 
-  async findAll(id : string) {
+  async findAll(userId : string) {
     const allcars = await this.prisma.car.findMany({
       where:{
-        userId: id
+        userId: userId
       }
     })
   return allcars;
@@ -57,7 +57,10 @@ export class CarService {
     })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} car`;
+  async remove(id: string) {
+    const removeCar = await this.prisma.car.delete({
+      where: { id }
+    })
+  return removeCar;
   }
 }

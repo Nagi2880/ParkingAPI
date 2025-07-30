@@ -3,32 +3,64 @@ import { CarService } from './car.service';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
 
-@Controller('car')
+@Controller('api/car')
 export class CarController {
   constructor(private readonly carService: CarService) {}
 
-  @Post()
-  create(@Body() createCarDto: CreateCarDto) {
-    return this.carService.create(createCarDto);
-  }
+  @Post('newcar')
+  async create(@Body() createCarDto: CreateCarDto) {
+    const newCar = await this.carService.create(createCarDto);
+    return {
+      success: true,
+      message: 'Car created successfully',
+      data: newCar
+    }
+    }
+  
 
-  @Get()
-  findAll() {
-    return this.carService.findAll();
+  @Get('/getallcars/:userId')
+  async findAll(@Param('userId') userId: string) {
+    const allCars = await this.carService.findAll(userId);
+    return{
+      success: true,
+      message: 'All cars retrieved successfully',
+      data: allCars
+    }
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.carService.findOne(+id);
+  @Get('/GetcarbyId/:id')
+  async findbyId(@Param('id') id: string){
+    const car = await this.carService.findbyId(id);
+    if (!car) {
+      return{
+        success:false,
+        message: 'Car not found',
+      }
+    }else{
+      return {
+        success: true,
+        message: 'Car retrieved successfully',
+        data: car
+      }
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCarDto: UpdateCarDto) {
-    return this.carService.update(+id, updateCarDto);
+  async update(@Param('id') id: string, @Body() updateCarDto: UpdateCarDto) {
+  const updateCar = await this.carService.updatemyCar(id, updateCarDto.userId, updateCarDto);  
+  return{
+    success: true,
+    message: `Car with ID ${id} updated successfully`,
+    data: updateCar
   }
+}
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.carService.remove(+id);
+    const removeCar = this.carService.remove(id);
+    return{
+      success: true,
+      message: `Car with ID ${id} deleted successfully`,
+      data: removeCar
+    }
   }
 }
