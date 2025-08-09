@@ -2,7 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { DeleteUserGuard } from './guards/delete-user.guard';
+import { DeleteUserGuard } from '../guards/delete-user.guard';
+import { JwtAuthGuard } from 'src/guards/jwd-auth.guard';
 
 @Controller('api/user')
 export class UserController {
@@ -61,7 +62,7 @@ export class UserController {
   }
 
   @Delete('/deleteuser:id')
-  @UseGuards(DeleteUserGuard)
+  @UseGuards(JwtAuthGuard,DeleteUserGuard)
   async  remove(@Param('id') id: string) {
     const removeUser = await this.userService.remove(id);
     return {
