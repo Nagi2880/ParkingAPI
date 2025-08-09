@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { DeleteUserGuard } from './guards/delete-user.guard';
 
 @Controller('api/user')
 export class UserController {
@@ -50,8 +51,9 @@ export class UserController {
   }
 
   @Delete('/deleteuser:id')
-  remove(@Param('id') id: string) {
-    const removeUser = this.userService.remove(id);
+  @UseGuards(DeleteUserGuard)
+  async  remove(@Param('id') id: string) {
+    const removeUser = await this.userService.remove(id);
     return {
       success: true,
       message: `User with ID ${id} deleted successfully`,

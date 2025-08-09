@@ -16,7 +16,10 @@ export class UserService {
         birthDate: createUserDto.birthDate,
         phone: createUserDto.phone,
         password: createUserDto.password,
+        dni: createUserDto.dni,
+        dniType: createUserDto.dniType,
         createdAt: new Date(),
+        
       } 
     });
     return newUser;
