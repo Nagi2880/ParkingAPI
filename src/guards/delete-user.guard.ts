@@ -7,7 +7,7 @@ export class DeleteUserGuard implements CanActivate {
         const user = request.user; // Asumiendo que el usuario está en la solicitud
 
         if (user && user.role === 'ADMIN' || user.id === request.params.id) {
-        return true; // Permitir acceso si el usuario es un administrador
+        return true;
         }
 
         throw new ForbiddenException('You do not have permission to delete users');
