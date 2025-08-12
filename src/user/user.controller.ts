@@ -31,7 +31,7 @@ export class UserController {
     }
   }
 
-  @Get('/getuser:id')
+  @Get('/getuserbyID:id')
   async findbyId(@Param('id') id: string) {
     const user = await this.userService.findbyId(id);
     return {
@@ -41,7 +41,7 @@ export class UserController {
     } 
   }
 
-  @Get('/getuser/:email')
+  @Get('/getuserbyEmail/:email')
   async findByEmail(@Param('email') email: string) {
     const user = await this.userService.findByEmail(email);
     return {
@@ -51,7 +51,7 @@ export class UserController {
     };
   }
 
-  @Patch('/updateuser:id')
+  @Patch('/updateuser/:id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const updatedUser = await this.userService.update(id, updateUserDto);
     return {
@@ -61,7 +61,7 @@ export class UserController {
     };
   }
 
-  @Delete('/deleteuser:id')
+  @Delete('/deleteuser/:id')
   @UseGuards(JwtAuthGuard,DeleteUserGuard)
   async  remove(@Param('id') id: string) {
     const removeUser = await this.userService.remove(id);
