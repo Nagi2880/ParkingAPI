@@ -1,5 +1,6 @@
 import { Dnitype } from "@prisma/client";
-import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsString, Length } from "class-validator";
+import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsString, Length, } from "class-validator";
+import { Type } from "class-transformer";
 import nationalitiesJson from '../nationalities.json';
 
 export const Nationalities = nationalitiesJson.nationalities
@@ -29,6 +30,7 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsDate()
+    @Type(() => Date)
     birthDate:      Date;
 
     @IsNotEmpty()
@@ -41,10 +43,6 @@ export class CreateUserDto {
     @Length(8, 100)
     password:       string;
     
-    @IsNotEmpty()
-    @IsDate()
-    createdAt:      Date;
-
     @IsNotEmpty()
     @IsString()
     @Length(5, 20)

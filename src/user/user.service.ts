@@ -21,9 +21,10 @@ export class UserService {
         dni: createUserDto.dni,
         dniType: createUserDto.dniType,
         createdAt: new Date(),
-        
       } 
     });
+
+
     return newUser;
   }
 
