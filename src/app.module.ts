@@ -18,3 +18,4 @@ import { ConfigModule } from '@nestjs/config';
   providers: [PrismaService],
 })
 export class AppModule {}
+  
